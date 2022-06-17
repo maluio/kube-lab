@@ -1,0 +1,3 @@
+.ipynb_checkpoints
+mycluster/hosts.yml
+kubeadm_certificate_key.creds

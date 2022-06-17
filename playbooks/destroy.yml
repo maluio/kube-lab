@@ -1,0 +1,14 @@
+---
+- name: Destroy servers
+  hosts: localhost
+  tasks:
+    - name: Destroy all servers
+      hcloud_server:
+        name: "{{ item.name }}"
+        state: absent
+      loop: "{{ hostvars.values() | list }}"
+
+    - name: Remove ssh_key
+      hcloud_ssh_key:
+        name: kube-lab
+        state: absent

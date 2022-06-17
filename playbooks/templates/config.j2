@@ -1,0 +1,9 @@
+{% for item in my_hosts %}
+{% if (item.ansible_host is defined) and (item.ansible_host is not none) %}
+Host {{ item.inventory_hostname }}
+    HostName {{ item.ansible_host }}
+    User root
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+{% endif %}
+{% endfor %}

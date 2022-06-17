@@ -1,0 +1,39 @@
+---
+
+- name: Create servers
+  hosts: localhost
+  tasks:
+    - name:
+      ansible.builtin.file:
+        path: ~/.ssh
+        state: directory
+
+    - name: Generate an OpenSSH keypair with the default values (4096 bits, rsa)
+      community.crypto.openssh_keypair:
+        path: ~/.ssh/id_rsa
+      register: ssh_result
+
+    - name: Remove ssh_key
+      hcloud_ssh_key:
+        name: kube-lab
+        state: absent
+
+    - name: Add new ssh_key
+      hcloud_ssh_key:
+        name: kube-lab
+        public_key: "{{ssh_result['public_key'] }}"
+        state: present
+
+    - name: Create servers
+      hcloud_server:
+        name: "{{ item }}"
+        state: present
+        datacenter: nbg1-dc3
+        image: ubuntu-20.04
+        server_type: cx21
+        ssh_keys:
+          - kube-lab
+      loop:
+        - node1
+        - node2
+        - node3

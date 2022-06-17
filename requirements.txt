@@ -1,0 +1,4 @@
+# These are the python package that are required by this lab.
+# They are appended to kubespray's own https://github.com/kubernetes-sigs/kubespray/blob/master/requirements-2.12.txt
+jupyterlab
+hcloud

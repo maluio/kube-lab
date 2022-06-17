@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cd "$PROJ_PATH" || exit 1
+
+# (set -x; COMMAND) prints the command and runs it
+(set -x; ansible-playbook -i playbooks/hcloud.yml "$@")

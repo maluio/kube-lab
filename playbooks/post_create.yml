@@ -1,0 +1,20 @@
+- name: Create ssh config
+  hosts: localhost
+
+  tasks:
+    - set_fact:
+        my_hosts: "{{ hostvars
+                          | dict2items 
+                          | map(attribute='value')
+                          | list
+                          }}"
+
+    - name: Write ssh config file
+      template:
+        src: templates/config.j2
+        dest: ~/.ssh/config
+
+    - name: Write kubespray hosts file
+      template:
+        src: templates/hosts.yml
+        dest: ../mycluster/hosts.yml

@@ -1,0 +1,29 @@
+- name: Post deployment
+  hosts: node1
+  tasks:
+    - name: Donwload kube config
+      ansible.builtin.fetch:
+        src: /root/.kube/config
+        dest: /root/.kube/config
+        flat: yes
+
+- name: Post deployment
+  hosts: localhost
+  tasks:
+    - name: Replace entrypoint in kube config
+      ansible.builtin.replace:
+        path: ~/.kube/config
+        regexp: '127\.0\.0\.1'
+        replace: "{{ hostvars['node1']['ansible_host'] }}"
+
+    # https://helm.sh/docs/intro/install/#from-apt-debianubuntu
+    - name: Install helm
+      ansible.builtin.shell:
+        cmd: |
+          {
+            curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null
+            apt-get install apt-transport-https --yes
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" |  tee /etc/apt/sources.list.d/helm-stable-debian.list
+            apt-get update
+            apt-get install helm
+          }
