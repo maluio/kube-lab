@@ -54,7 +54,12 @@ def get_ips() -> [str]:
             continue
         if ip in IGNORE_IPS:
             continue
-        if not ipaddress.ip_address(ip).is_private:
+        try:
+            parsed_ip = ipaddress.ip_address(ip)
+        except Exception:
+            print(f"{ip} is not a valid IP address and will be ignored")
+            continue
+        if not parsed_ip.is_private:
             ips.append(ip)
     return ips
 
