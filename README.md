@@ -13,8 +13,8 @@ Running commands in Jupyter Notebooks makes it easy to fiddle with the cluster w
 
 Here are some of the notebooks I have been working on (most of which are still work in progress):
 
-* [Running diagnostics on a k8s cluser](./notebooks/diagnostics.ipynb)
-* [Installing prometheus + grafana](./notebooks/prometheus.ipynb)
+* [Running diagnostics in a k8s cluster](./notebooks/diagnostics.ipynb)
+* [Prometheus Operator + kube-prometheus](./notebooks/prometheus)
 * [Playing with Ingress](./notebooks/ingress.ipynb)
 * [Installing gitlab-ce using the official helm chart](./notebooks/gitlab.ipynb)
 
